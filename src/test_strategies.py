@@ -17,6 +17,9 @@ def update_positive_tests(graph, confirmed_positive_nodes, confirmed_negative_no
 
     mutates the graph (edges and weights) to reflect probable behavior changes after testing
 
+    NOTE: Currently it is not multaplicative for things of the same type, but it is for things of different 
+    type
+
     '''
 
     # Set confirmed attribute for confirmed postive
