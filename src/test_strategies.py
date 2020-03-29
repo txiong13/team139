@@ -187,7 +187,7 @@ def test_strat_most_infected(graph, num_tests):
         if random.random() < attempt_tested_dist.pdf(days_since_I):
             tested_nodes.append(infected)
     if len(tested_nodes) > num_tests:
-        sort(tested_nodes, key = graph.nodes[infected]['days_since_I'])
+        tested_nodes.sort(key = graph.nodes[infected]['days_since_I'])
         tested_nodes = tested_nodes[:num_tests]
     elif len(tested_nodes) < num_tests:
         extra_tested_nodes = test_strat_random_sample(graph, num_tests - len(tested_nodes))
