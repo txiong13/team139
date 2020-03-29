@@ -1,6 +1,7 @@
 import networkx as nx
 from random import sample
 import random
+from scipy.stats import norm
 
 quarantine_infectivity = 0.1
 confirmed_negative_infectivity = 1.1
@@ -189,7 +190,7 @@ def test_strat_most_infected(graph, num_tests):
         sort(tested_nodes, key = graph.nodes[infected]['days_since_I'])
         tested_nodes = tested_nodes[:num_tests]
     elif len(tested_nodes) < num_tests:
-        extra_tested_nodes = test_strat_random_sample(graph, num_tests - tested_nodes)
+        extra_tested_nodes = test_strat_random_sample(graph, num_tests - len(tested_nodes))
 
     positive_nodes, negative_nodes = perform_test(graph, tested_nodes)
     update_positive_tests(graph, positive_nodes, negative_nodes)
@@ -213,3 +214,6 @@ for edge in g.edges():
 print(test_strat_random_sample(g, 1))
 print(test_strat_high_contact(g, 4))
 
+dist = norm(0,1)
+
+print(dist.pdf(2))
