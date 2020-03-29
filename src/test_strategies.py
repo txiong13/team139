@@ -27,18 +27,18 @@ def update_positive_tests(graph, confirmed_positive_nodes, confirmed_negative_no
     nx.set_node_attributes(graph, confirmed_neg_dic, name = "tested")
 
     # Set edge weights for confirmed positive
-    cp_edges = G.edges(confirmed_positive_nodes)
-    weight = nx.get_edge_attributes(G, "weight")
+    cp_edges = graph.edges(confirmed_positive_nodes)
+    weight = nx.get_edge_attributes(graph, "weight")
     cp_edges = (e if e in weight else (e[1], e[0]) for e in cp_edges)
     updated_edges = {e: weight[e]*quarentine_infectivity for e in cp_edges}
-    nx.set_edge_attributes(G, name = "weight", values = updated_edges)
+    nx.set_edge_attributes(graph, name = "weight", values = updated_edges)
 
     # Set edge weights for confirmed negative 
-    cn_edges = G.edges(confirmed_negative_nodes)
-    weight = nx.get_edge_attributes(G, "weight")
+    cn_edges = graph.edges(confirmed_negative_nodes)
+    weight = nx.get_edge_attributes(graph, "weight")
     cn_edges = (e if e in weight else (e[1], e[0]) for e in cn_edges)
     updated_edges = {e: weight[e]*confirmed_negative_infectivity for e in cn_edges}
-    nx.set_edge_attributes(G, name = "weight", values = updated_edges)
+    nx.set_edge_attributes(graph, name = "weight", values = updated_edges)
 
 def test_strat_random_sample(graph, n):
     '''
