@@ -1,5 +1,6 @@
 import networkx as nx
 from random import sample
+import random
 
 quarantine_infectivity = 0.1
 confirmed_negative_infectivity = 1.1
