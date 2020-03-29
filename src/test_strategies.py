@@ -94,6 +94,7 @@ def test_strat_high_contact(graph, d):
 
     '''
     node_deg_pairs = list(graph.degree())
+    print(node_deg_pairs, "NODE DEG PAIRS")
     
     tested_nodes = [node for node, deg in node_deg_pairs if deg>=d]
     '''
