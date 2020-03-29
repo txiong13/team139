@@ -4,7 +4,7 @@ from random import sample
 quarantine_infectivity = 0.1
 confirmed_negative_infectivity = 1.1
 
-FAMILY_CLIQUE_SIZE = 4
+FAMILY_CLIQUE_SIZE = 3
 
 def update_positive_tests(graph, confirmed_positive_nodes, confirmed_negative_nodes):
     '''
@@ -66,6 +66,27 @@ def perform_test(graph, tested_nodes):
             negative_nodes.append(node)
     return positive_nodes, negative_nodes
 
+def perform_clique_test(graph, tested_nodes):
+    '''
+    Tests each node of each clique of tested_nodes in graph.
+
+    Parameters:
+        'graph' : NetworkX graph to be analyzed
+        'tested_nodes' : list of cliques, which are lists of nodes to be tested
+
+    Returns:
+        positive_nodes, negative_nodes : lists of nodes that tested positive and negative, respectively
+    '''
+    positive_nodes = []
+    negative_nodes = []
+    for clique in tested_nodes:
+        for node in clique:
+            if graph.nodes[node]['status'] == 'I':
+                positive_nodes += clique
+                break
+        negative_nodes += clique
+    return positive_nodes, negative_nodes
+
 def test_strat_random_sample(graph, n):
     '''
     Randomly select n nodes of the graph to be tested; tests those nodes and mutates graph accordingly.
@@ -94,14 +115,7 @@ def test_strat_high_contact(graph, d):
 
     '''
     node_deg_pairs = list(graph.degree())
-    print(node_deg_pairs, "NODE DEG PAIRS")
-    
-    tested_nodes = [node for node, deg in node_deg_pairs if deg>=d]
-    '''
-    for node, deg in node_deg_pairs:
-        if deg >= d:
-            tested_nodes.append(node)
-    '''
+    tested_nodes = [node for node, deg in node_deg_pairs if deg >= d]
     positive_nodes, negative_nodes = perform_test(graph, tested_nodes)
     update_positive_tests(graph, positive_nodes, negative_nodes)
     return tested_nodes
@@ -113,12 +127,14 @@ def test_strat_pool_family(graph):
     Parameters:
         "graph" : NetworkX graph to be analyzed
     Returns:
-        list of nodes that were tested
+        list of cliques (each a list of nodes) that were tested
     '''
 
     tested_nodes = []
     max_cliques = nx.find_cliques(graph)
     tested_nodes = [clique for clique in max_cliques if len(clique) >= FAMILY_CLIQUE_SIZE]
+    positive_nodes, negative_nodes = perform_clique_test(graph, tested_nodes)
+    update_positive_tests(graph, positive_nodes, negative_nodes)
     return tested_nodes
 
 
@@ -129,13 +145,15 @@ g.add_edge(1,4)
 g.add_edge(1,5)
 g.add_edge(5,6)
 
+g.add_edge(2,3)
+
 for i in range(1,7):
     g.nodes[i]['status'] = 'I'
 
 for edge in g.edges():
     g.edges[edge]['weight'] = 1
 
-print(test_strat_random_sample(g, 1))
-print(test_strat_high_contact(g, 4))
+#print(test_strat_random_sample(g, 1))
+#print(test_strat_high_contact(g, 4))
 print(test_strat_pool_family(g))
 
