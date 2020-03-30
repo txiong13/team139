@@ -111,7 +111,7 @@ def test_strat_random_sample(graph, num_tests):
     update_positive_tests(graph, positive_nodes, negative_nodes)
     return tested_nodes, len(tested_nodes), extra_tests
 
-def test_strat_high_contact(graph, d = 0, num_tests = None):
+def test_strat_high_contact(graph, d = 0, num_tests = None, recently_tested = set()):
     '''
     If num_tests is None, test all nodes with degree greater than or equal to d in graph and mutates graph accordingly.
     If num_tests is not None, test the num_tests highest degree nodes.
@@ -125,7 +125,7 @@ def test_strat_high_contact(graph, d = 0, num_tests = None):
     '''
     node_deg_pairs = list(graph.degree())
     if num_tests is None:
-        tested_nodes = [node for node, deg in node_deg_pairs if deg >= d]
+        tested_nodes = [node for node, deg in node_deg_pairs if deg >= d and node not in recently_tested]
         extra_tests = 0
     else:
         tested_nodes = graph.graph['node_degrees'][:num_tests]
