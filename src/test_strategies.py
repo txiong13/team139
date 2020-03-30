@@ -178,6 +178,8 @@ def test_strat_most_infected(graph, num_tests, prop_actual = 1):
     
     Parameters:
         "graph" : NetworkX graph to be analyzed
+        "num_tests" : nonnegative integer, number of people to be tested
+        "prop_actual" : number from (0,1]. This is the proportion of the total tests that are guaranteed to be done on infected individuals.
 
     Returns:
         list of nodes that we tested
