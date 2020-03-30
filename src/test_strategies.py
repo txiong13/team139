@@ -205,3 +205,4 @@ def test_strat_most_infected(graph, num_tests, prop_actual = 1):
     update_positive_tests(graph, positive_nodes, negative_nodes)
     return tested_nodes
 
+
