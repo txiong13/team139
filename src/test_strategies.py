@@ -204,25 +204,3 @@ def test_strat_most_infected(graph, num_tests, prop_actual = 1):
     update_positive_tests(graph, positive_nodes, negative_nodes)
     return tested_nodes
 
-g = nx.Graph()
-g.add_nodes_from([1,2,3,4,5,6], confirmed = True)
-g.add_edge(1,2)
-g.add_edge(1,3)
-g.add_edge(1,4)
-g.add_edge(1,5)
-g.add_edge(5,6)
-g.add_edge(2,3)
-
-
-for i in range(1,7):
-    g.nodes[i]['status'] = 'I'
-
-for edge in g.edges():
-    g.edges[edge]['weight'] = 1
-
-print(test_strat_random_sample(g, 1))
-print(test_strat_high_contact(g, 4))
-
-dist = norm(0,1)
-
-print(dist.pdf(2))
