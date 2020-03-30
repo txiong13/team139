@@ -104,9 +104,9 @@ def test_strat_random_sample(graph, num_tests):
     Returns:
         list of nodes that were tested, number of tests that were used, number of extra tests
     '''
-    extra_tests = max(num_tests - len(graph),0)
-
-    tested_nodes = sample(list(graph.nodes()), num_tests - extra_tests)
+    not_confirmed_nodes = [node for node, value in graph.nodes(data = True) if not graph.nodes[node]['confirmed']]
+    extra_tests = max(num_tests - len(not_confirmed_nodes),0)
+    tested_nodes = sample(not_confirmed_nodes, num_tests - extra_tests)
     positive_nodes, negative_nodes = perform_test(graph, tested_nodes)
     update_positive_tests(graph, positive_nodes, negative_nodes)
     return tested_nodes, len(tested_nodes), extra_tests
@@ -125,10 +125,15 @@ def test_strat_high_contact(graph, d = 0, num_tests = None, recently_tested = se
     '''
     node_deg_pairs = list(graph.degree())
     if num_tests is None:
-        tested_nodes = [node for node, deg in node_deg_pairs if deg >= d and node not in recently_tested]
+        tested_nodes = [node for node, deg in node_deg_pairs if deg >= d and node not in recently_tested
+                                                                        and not graph.nodes[node]['confirmed']]
         extra_tests = 0
     else:
-        tested_nodes = graph.graph['node_degrees'][:num_tests]
+        index = 0
+        while len(tested_nodes < num_tests):
+            node = graph.graph['node_degrees'][index] 
+            if node not in recently_tested and not graph.nodes[node]['confirmed']:
+                tested_nodes.append(node)
         extra_tests = num_tests - len(tested_nodes)
     positive_nodes, negative_nodes = perform_test(graph, tested_nodes)
     update_positive_tests(graph, positive_nodes, negative_nodes)
@@ -148,7 +153,6 @@ def test_strat_pool(graph, clique_size = FAMILY_CLIQUE_SIZE, num_tests = None):
     '''
 
     tested_nodes = []
-    #max_cliques = nx.find_cliques(graph)
     if num_tests is None:
         for size in graph.graph['clique_sizes']:
             if size >= clique_size:
@@ -167,7 +171,7 @@ def test_strat_pool(graph, clique_size = FAMILY_CLIQUE_SIZE, num_tests = None):
     update_positive_tests(graph, positive_nodes, negative_nodes)
     return tested_nodes, len(tested_nodes), extra_tests
 
-def test_strat_most_infected(graph, num_tests):
+def test_strat_most_infected(graph, num_tests, prop_actual = 1):
     '''
     Preferentially test the nodes who have been infected for the longest (defined as people who have been infected for >= 3 days), only a certain percent
     of these are "true" infected, which can be defined seperately
@@ -178,6 +182,8 @@ def test_strat_most_infected(graph, num_tests):
     Returns:
         list of nodes that we tested
     '''
+    total_num_tests = num_tests
+    num_tests *= prop_actual
     tested_nodes = []
     I_n = [n for n,v in graph.nodes(data=True) if v['status'] == 'I']
     I_checked = 0
@@ -191,12 +197,13 @@ def test_strat_most_infected(graph, num_tests):
         tested_nodes = tested_nodes[:num_tests]
     elif len(tested_nodes) < num_tests:
         extra_tested_nodes = test_strat_random_sample(graph, num_tests - len(tested_nodes))
-
+    uninfected_tested_nodes = test_strat_random_sample(graph, total_num_tests - num_tests)
     positive_nodes, negative_nodes = perform_test(graph, tested_nodes)
     update_positive_tests(graph, positive_nodes, negative_nodes)
     return tested_nodes
 
 g = nx.Graph()
+g.add_nodes_from([1,2,3,4,5,6], confirmed = True)
 g.add_edge(1,2)
 g.add_edge(1,3)
 g.add_edge(1,4)
