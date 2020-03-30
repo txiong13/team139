@@ -125,15 +125,16 @@ def test_strat_high_contact(graph, d = 0, num_tests = None, recently_tested = se
     '''
     node_deg_pairs = list(graph.degree())
     if num_tests is None:
-        tested_nodes = [node for node, deg in node_deg_pairs if deg >= d and node not in recently_tested
-                                                                        and not graph.nodes[node]['confirmed positive']]
+        tested_nodes = [node for node, deg in node_deg_pairs if deg >= d and node not in recently_tested and not graph.nodes[node]['confirmed positive']]
         extra_tests = 0
     else:
         index = 0
-        while len(tested_nodes < num_tests):
+        tested_nodes = []
+        while len(tested_nodes) < num_tests:
             node = graph.graph['node_degrees'][index] 
             if node not in recently_tested and not graph.nodes[node]['confirmed positive']:
                 tested_nodes.append(node)
+            index += 1 
         extra_tests = num_tests - len(tested_nodes)
     positive_nodes, negative_nodes = perform_test(graph, tested_nodes)
     update_positive_tests(graph, positive_nodes, negative_nodes)
