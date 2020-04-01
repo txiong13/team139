@@ -32,7 +32,7 @@ We considered 4 different testing regimes:
 With each strategy the user can choose how many tests to allocate to each strategy, which allows flexibility of the model to consider different combinations of testing strategies as well
 
 ## Parameters
-R_0 = 2.8 (Lou Et al. March 20, average of 14 other R0 studies) <br>
+R_0 = 2.8 ([Lou Et al. March 20, average of 14 other R0 studies](https://www.ncbi.nlm.nih.gov/pubmed/32007643)) <br>
 TOTAL_DURATION_OF_INFECTION = 14 (WHO China join mission on COVID pg 14) <br>
 HOSPITALIZED_DURATION_OF_INFECTION = 20 IQR: 17-24, (Zhou Et al. Lancet 2020) <br>
 DIST_INCUBATION_MEAN = 1.621 (Lauer Et al., Annals of Internal Medicine, March 2020) <br>
