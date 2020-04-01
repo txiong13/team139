@@ -32,16 +32,16 @@ We considered 4 different testing regimes:
 With each strategy the user can choose how many tests to allocate to each strategy, which allows flexibility of the model to consider different combinations of testing strategies as well
 
 ## Parameters
-R_0 = 2.8 (Lou Et al. March 20, average of 14 other R0 studies)
-TOTAL_DURATION_OF_INFECTION = 14 (WHO China join mission on COVID pg 14) 
-HOSPITALIZED_DURATION_OF_INFECTION = 20 IQR: 17-24, (Zhou Et al. Lancet 2020)
-DIST_INCUBATION_MEAN = 1.621 (Lauer Et al., Annals of Internal Medicine, March 2020) 
-DIST_INCUBATION_SD = .481 (Lauer Et al., Annals of Internal Medicine, March 2020)
-PROB_ALWAYS_ASYMPTOMATIC = 82.1% (Mizumoto et al., Eurosurveilance, March 2020)
-DIST_HOSPITAL_MEAN = 8 days IQR: 4-10 (Wang et al. JAMA Network, Feb 2020)
-DIST_HOSPITAL_SD = 1
-PROB_HOSPITAL = .1755 (https://www.cdc.gov/mmwr/volumes/69/wr/mm6912e2.htm?s_cid=mm6912e2_w) 
-PROB_DEATH_IF_HOSPITAL = .01 (https://www.cdc.gov/mmwr/volumes/69/wr/mm6912e2.htm?s_cid=mm6912e2_w)
+R_0 = 2.8 (Lou Et al. March 20, average of 14 other R0 studies) <br>
+TOTAL_DURATION_OF_INFECTION = 14 (WHO China join mission on COVID pg 14) <br>  
+HOSPITALIZED_DURATION_OF_INFECTION = 20 IQR: 17-24, (Zhou Et al. Lancet 2020) <br>
+DIST_INCUBATION_MEAN = 1.621 (Lauer Et al., Annals of Internal Medicine, March 2020) <br>
+DIST_INCUBATION_SD = .481 (Lauer Et al., Annals of Internal Medicine, March 2020) <br>
+PROB_ALWAYS_ASYMPTOMATIC = 82.1% (Mizumoto et al., Eurosurveilance, March 2020) <br>
+DIST_HOSPITAL_MEAN = 8 days IQR: 4-10 (Wang et al. JAMA Network, Feb 2020) <br>
+DIST_HOSPITAL_SD = 1 <br>
+PROB_HOSPITAL = .1755 (https://www.cdc.gov/mmwr/volumes/69/wr/mm6912e2.htm?s_cid=mm6912e2_w) <br>
+PROB_DEATH_IF_HOSPITAL = .01 (https://www.cdc.gov/mmwr/volumes/69/wr/mm6912e2.htm?s_cid=mm6912e2_w) <br>
 
 ## Assumptions
 Period of time before social isolation follows the same distribution as incubation period
