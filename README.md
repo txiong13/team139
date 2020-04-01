@@ -33,7 +33,7 @@ With each strategy the user can choose how many tests to allocate to each strate
 
 ## Parameters
 R_0 = 2.8 (Lou Et al. March 20, average of 14 other R0 studies) <br>
-TOTAL_DURATION_OF_INFECTION = 14 (WHO China join mission on COVID pg 14) <br>  
+TOTAL_DURATION_OF_INFECTION = 14 (WHO China join mission on COVID pg 14) <br>
 HOSPITALIZED_DURATION_OF_INFECTION = 20 IQR: 17-24, (Zhou Et al. Lancet 2020) <br>
 DIST_INCUBATION_MEAN = 1.621 (Lauer Et al., Annals of Internal Medicine, March 2020) <br>
 DIST_INCUBATION_SD = .481 (Lauer Et al., Annals of Internal Medicine, March 2020) <br>
